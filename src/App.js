@@ -1,12 +1,15 @@
 import React from 'react';
 import './App.css';
+import LoginPage from './components/LoginPage';
 
-function App() {
-  return (
-    <div className="App">
-      Olá, mundão!
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <LoginPage />
+      </div>
+    );
+  }
 }
 
 export default App;
