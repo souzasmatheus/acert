@@ -31,10 +31,11 @@ const styles = {
   }
 };
 
-class LoginPage extends Component {
+class RegisterPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       email: '',
       password: '',
       error: null
@@ -42,38 +43,39 @@ class LoginPage extends Component {
   }
 
   setValue = value => e => {
-    this.setState({ [value]: e.target.value }, () =>
-      console.log(this.state[value])
-    );
+    this.setState({ [value]: e.target.value });
   };
 
-  login = () => {
-    const { login } = this.props;
-    const { email, password } = this.state;
+  register = () => {
+    const { error, ...newUser } = this.state;
+
     const users = window.localStorage.getItem('users');
 
     if (users) {
       const matchedUser = JSON.parse(users).filter(
-        user => user.email === email
+        user => user.email === newUser.email
       )[0];
 
-      if (matchedUser && matchedUser.password === password) {
-        login(matchedUser);
+      if (matchedUser) {
+        this.setState({ error: 'This user already exists' });
       } else {
-        this.setState({
-          error: 'E-mail or password is invalid'
-        });
+        const parsedUsers = JSON.parse(users);
+        parsedUsers.push({ ...newUser, history: [] });
+
+        window.localStorage.setItem('users', JSON.stringify(parsedUsers));
       }
     } else {
-      this.setState({
-        error: 'No users registered yep. Please, sign up first'
-      });
+      const newUsers = [{ ...newUser, history: [] }];
+
+      window.localStorage.setItem('users', JSON.stringify(newUsers));
+
+      this.goToLogin();
     }
   };
 
-  goToRegister = () => {
+  goToLogin = () => {
     const { changePage } = this.props;
-    changePage(2);
+    changePage(1);
   };
 
   render() {
@@ -84,7 +86,7 @@ class LoginPage extends Component {
       <>
         <AppBar position="relative" className={classes.appBar}>
           <Typography className={classes.heading} variant="h4" align="center">
-            Login
+            Register
           </Typography>
         </AppBar>
 
@@ -102,6 +104,11 @@ class LoginPage extends Component {
         <form className={classes.form}>
           <TextField
             className={classes.textField}
+            label="Name"
+            onChange={this.setValue('name')}
+          />
+          <TextField
+            className={classes.textField}
             label="E-mail"
             onChange={this.setValue('email')}
           />
@@ -112,15 +119,15 @@ class LoginPage extends Component {
             type="password"
           />
           <div className={classes.btnsContainer}>
-            <Button variant="outlined" onClick={() => this.goToRegister()}>
-              Register
+            <Button variant="outlined" onClick={() => this.goToLogin()}>
+              Login
             </Button>
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => this.login()}
+              onClick={() => this.register()}
             >
-              Login
+              Register
             </Button>
           </div>
         </form>
@@ -129,4 +136,4 @@ class LoginPage extends Component {
   }
 }
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(RegisterPage);
