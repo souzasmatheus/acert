@@ -10,9 +10,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import ExitIcon from '@material-ui/icons/ExitToApp';
-import HistoryIcon from '@material-ui/icons/History';
 import Grid from '@material-ui/core/Grid';
+
 import ArtistItem from '../ArtistItem';
+import History from '../History';
 
 const styles = {
   artistsContainer: {
@@ -62,17 +63,18 @@ class HomePage extends Component {
     const { updateHistory } = this.props;
     const { query } = this.state;
 
-    updateHistory(query);
-
     try {
       const response = await axios.get(
         `http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${query}&format=json&api_key=${process.env.REACT_APP_APIKEY}`
       );
 
-      this.setState({
-        data: [...response.data.results.artistmatches.artist],
-        error: null
-      });
+      this.setState(
+        {
+          data: [...response.data.results.artistmatches.artist],
+          error: null
+        },
+        () => updateHistory(query)
+      );
     } catch (e) {
       this.setState({
         error: 'There has been an error trying to load data. Please, try again'
@@ -97,9 +99,7 @@ class HomePage extends Component {
       <div className={classes.homeContainer}>
         <AppBar position="relative" className={classes.appBar}>
           <Toolbar className={classes.toolBar}>
-            <IconButton edge="start" color="inherit">
-              <HistoryIcon />
-            </IconButton>
+            <History history={user.history} />
             <Typography className={classes.heading} align="center" variant="h4">
               Olá, {user.name}!
             </Typography>

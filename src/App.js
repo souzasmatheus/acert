@@ -20,7 +20,7 @@ class App extends React.Component {
 
     users.forEach(u => {
       if (u.email === user.email) {
-        u.history.push(query);
+        u.history.unshift(query);
 
         this.setState({
           user: { name: u.name, history: u.history, email: u.email }
