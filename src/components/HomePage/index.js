@@ -109,7 +109,15 @@ class HomePage extends Component {
           </Toolbar>
         </AppBar>
 
-        <Container className={classes.inputContainer} maxWidth="sm">
+        <Container
+          className={classes.inputContainer}
+          maxWidth="sm"
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              this.search();
+            }
+          }}
+        >
           <TextField
             fullWidth
             className={classes.textField}

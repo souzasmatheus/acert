@@ -99,17 +99,26 @@ class LoginPage extends Component {
           </Typography>
         )}
 
-        <form className={classes.form}>
+        <form
+          className={classes.form}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              this.login();
+            }
+          }}
+        >
           <TextField
             className={classes.textField}
             label="E-mail"
             onChange={this.setValue('email')}
+            autoComplete="email"
           />
           <TextField
             className={classes.textField}
             label="Password"
             onChange={this.setValue('password')}
             type="password"
+            autoComplete="current-password"
           />
           <div className={classes.btnsContainer}>
             <Button variant="outlined" onClick={() => this.goToRegister()}>

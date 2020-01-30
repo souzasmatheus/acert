@@ -63,6 +63,7 @@ class RegisterPage extends Component {
         parsedUsers.push({ ...newUser, history: [] });
 
         window.localStorage.setItem('users', JSON.stringify(parsedUsers));
+        this.goToLogin();
       }
     } else {
       const newUsers = [{ ...newUser, history: [] }];
@@ -101,7 +102,14 @@ class RegisterPage extends Component {
           </Typography>
         )}
 
-        <form className={classes.form}>
+        <form
+          className={classes.form}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              this.register();
+            }
+          }}
+        >
           <TextField
             className={classes.textField}
             label="Name"

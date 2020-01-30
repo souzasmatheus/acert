@@ -48,11 +48,19 @@ class ArtistItem extends Component {
         `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${artistName}&format=json&api_key=${process.env.REACT_APP_APIKEY}`
       );
 
-      this.setState({
-        data: [...response.data.topalbums.album],
-        error: null,
-        showAlbums: true
-      });
+      if (response.data.topalbums.album.length > 0) {
+        this.setState({
+          data: [...response.data.topalbums.album],
+          error: null,
+          showAlbums: true
+        });
+      } else {
+        this.setState({
+          data: [],
+          error: 'No album for this artist was found',
+          showAlbums: true
+        });
+      }
     } catch (e) {
       this.setState({
         error: 'There has been an error trying to load data. Please, try again',
@@ -112,7 +120,7 @@ class ArtistItem extends Component {
             title={artistName}
             subheader={listeners}
           />
-          {showAlbums && albums.length > 0 && (
+          {showAlbums && (
             <CardContent>
               <List>{albums}</List>
             </CardContent>
