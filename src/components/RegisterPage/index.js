@@ -86,7 +86,12 @@ class RegisterPage extends Component {
     return (
       <>
         <AppBar position="relative" className={classes.appBar}>
-          <Typography className={classes.heading} variant="h4" align="center">
+          <Typography
+            data-testid="register-heading"
+            className={classes.heading}
+            variant="h4"
+            align="center"
+          >
             Register
           </Typography>
         </AppBar>
@@ -113,27 +118,35 @@ class RegisterPage extends Component {
           <TextField
             className={classes.textField}
             label="Name"
+            placeholder="Name"
             onChange={this.setValue('name')}
           />
           <TextField
             className={classes.textField}
             label="E-mail"
+            placeholder="E-mail"
             onChange={this.setValue('email')}
           />
           <TextField
             className={classes.textField}
             label="Password"
+            placeholder="Password"
             onChange={this.setValue('password')}
             type="password"
           />
           <div className={classes.btnsContainer}>
-            <Button variant="outlined" onClick={() => this.goToLogin()}>
+            <Button
+              data-testid="go-to-login"
+              variant="outlined"
+              onClick={() => this.goToLogin()}
+            >
               Login
             </Button>
             <Button
               variant="outlined"
               color="primary"
               onClick={() => this.register()}
+              data-testid="register-btn"
             >
               Register
             </Button>

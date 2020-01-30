@@ -28,7 +28,11 @@ class History extends React.Component {
     const items = history
       .filter((e, i) => i < 10)
       .map((element, index) => (
-        <MenuItem disabled onClick={() => this.handleClose()}>
+        <MenuItem
+          key={`menuItem-${index + 1}`}
+          disabled
+          onClick={() => this.handleClose()}
+        >
           {element}
         </MenuItem>
       ));

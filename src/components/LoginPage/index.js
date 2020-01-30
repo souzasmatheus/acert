@@ -42,9 +42,7 @@ class LoginPage extends Component {
   }
 
   setValue = value => e => {
-    this.setState({ [value]: e.target.value }, () =>
-      console.log(this.state[value])
-    );
+    this.setState({ [value]: e.target.value });
   };
 
   login = () => {
@@ -83,7 +81,12 @@ class LoginPage extends Component {
     return (
       <>
         <AppBar position="relative" className={classes.appBar}>
-          <Typography className={classes.heading} variant="h4" align="center">
+          <Typography
+            data-testid="login-heading"
+            className={classes.heading}
+            variant="h4"
+            align="center"
+          >
             Login
           </Typography>
         </AppBar>
@@ -112,6 +115,7 @@ class LoginPage extends Component {
             label="E-mail"
             onChange={this.setValue('email')}
             autoComplete="email"
+            placeholder="E-mail"
           />
           <TextField
             className={classes.textField}
@@ -119,15 +123,21 @@ class LoginPage extends Component {
             onChange={this.setValue('password')}
             type="password"
             autoComplete="current-password"
+            placeholder="Password"
           />
           <div className={classes.btnsContainer}>
-            <Button variant="outlined" onClick={() => this.goToRegister()}>
+            <Button
+              data-testid="go-to-register"
+              variant="outlined"
+              onClick={() => this.goToRegister()}
+            >
               Register
             </Button>
             <Button
               variant="outlined"
               color="primary"
               onClick={() => this.login()}
+              data-testid="login-btn"
             >
               Login
             </Button>

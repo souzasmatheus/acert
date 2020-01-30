@@ -100,7 +100,7 @@ class ArtistItem extends Component {
       ));
 
     return (
-      <Grid item md={4} sm={6} xs={11}>
+      <Grid data-testid="artist-container" item md={4} sm={6} xs={11}>
         <Card>
           <CardHeader
             avatar={<Avatar alt="Artist image" src={pic} />}

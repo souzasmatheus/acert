@@ -100,7 +100,12 @@ class HomePage extends Component {
         <AppBar position="relative" className={classes.appBar}>
           <Toolbar className={classes.toolBar}>
             <History history={user.history} />
-            <Typography className={classes.heading} align="center" variant="h4">
+            <Typography
+              data-testid="greeting"
+              className={classes.heading}
+              align="center"
+              variant="h4"
+            >
               Olá, {user.name}!
             </Typography>
             <IconButton onClick={() => logout()} edge="end" color="inherit">
